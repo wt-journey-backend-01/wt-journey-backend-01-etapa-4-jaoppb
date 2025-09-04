@@ -3,8 +3,10 @@ import agentsController, { sortFilter } from '../controllers/agentesController';
 import { ZodOpenApiOperationObject, ZodOpenApiPathsObject } from 'zod-openapi';
 import z from 'zod';
 import AgentSchema from '../models/agent';
+import { authMiddleware } from '../middlewares/authMiddleware';
 
 const router = express.Router();
+router.use(authMiddleware);
 
 const getAllApi: ZodOpenApiOperationObject = {
 	summary: 'Get all agents',
