@@ -3,10 +3,10 @@ name: Autograder
 on:
   push:
     branches:
-      - main 
+      - main # Or your main branch
   pull_request:
     branches:
-      - main 
+      - main # Or your main branch
   workflow_dispatch:
 
 jobs:
@@ -44,14 +44,14 @@ jobs:
         with:
           app_id: ${{ secrets.AUTOGRADER_APP_ID }}
           private_key: ${{ secrets.AUTOGRADER_APP_PRIVATE_KEY }}
-          repository: ${{ github.repository }} 
+          repository: ${{ github.repository }} # Scopes the token to the current repository
 
    
       - name: Checkout repository
         uses: actions/checkout@v4
         with:
           path: submission
-          token: ${{ steps.generate_app_token.outputs.token }} 
+          token: ${{ steps.generate_app_token.outputs.token }} # Use the App's token for checkout
 
       
       - name: Configure Git for AUTOGRADER-BOT
@@ -62,10 +62,9 @@ jobs:
 
     
       - name: Check repository criteria
-        uses: webtech-network/autograder@etapa-4
+        uses: webtech-network/autograder@etapa-3
         with:
-          JWT_SECRET: ${{ secrets.JWT_SECRET }}
-          autograder_bot_token: ${{ steps.generate_app_token.outputs.token }} 
+          autograder_bot_token: ${{ steps.generate_app_token.outputs.token }} # Pass the App token here!
           redis_name: ${{ secrets.REDIS_NAME }}
           redis_url: ${{ secrets.REDIS_URL }}
           autograder_engine: ${{ secrets.ENGINE }}
