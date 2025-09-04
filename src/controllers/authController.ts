@@ -8,11 +8,11 @@ function register(req: Request, res: Response) {
 	res.status(201).send();
 }
 
-function login(req: Request, res: Response) {
+async function login(req: Request, res: Response) {
 	const { email, senha } = req.body as any;
 
-	const token = authRepository.login({ email, senha } as any);
-	res.status(200).send();
+	const token = await authRepository.login({ email, senha } as any);
+	res.status(200).json({ access_token: token.token });
 }
 
 function logout(req: Request, res: Response) {
